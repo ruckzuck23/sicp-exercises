@@ -31,7 +31,7 @@
 ;;define exponential operator
 (defn ** [x n] (reduce * (repeat n x)))
 
-;;SICP ex 1.16 solve iteratively
+;;ex 1.16 solve iteratively
 (defn ex-1-16
   [b n]
   (letfn [(fast-exp [a b n]
@@ -41,3 +41,39 @@
                 (fast-exp a (** b 2) (quot n 2))
                 (fast-exp (* a b) b (dec n)))))]
     (fast-exp 1 b n)))
+
+;;ex1.17
+;;implement an algorithm faster than the following one, using my-double and my-halve
+;(define (* a b)
+;  (if (= b 0)
+;      0
+;      (+ a (* a (- b 1)))))
+(defn my-double
+        [a]
+        (+ a a))
+
+(defn my-halve
+        "Takes only even numbers. Divide inputs by two"
+        [a]
+        (if (even? a)
+          (quot a 2)
+          (System/exit 0)))
+
+
+(defn ex1-17
+  [a b]
+  (if (= b 0)
+      0
+      (if (even? b)
+          (my-double (ex1-17 a (my-halve b)))
+          (+ a (my-double (ex1-17 a (my-halve (dec b))))))))
+
+;;ex1.18
+;;implement an iterative version of ex1.17 solution
+(defn fast-*
+  [a b]
+  (letfn [(iter [acc a b]
+                 (cond (= b 0) acc
+                       (even? b) (iter acc (my-double a) (my-halve b))
+                       :else (iter (+ acc a) (my-double a) (my-halve (dec b)))))]
+    (iter 0 a b)))

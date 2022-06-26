@@ -1,5 +1,7 @@
 # sicp-exercises
 
+solutions for exercises from [SICP](https://mitpress.mit.edu/sites/default/files/sicp/index.html)
+
 ## Usage
 
 FIXME
